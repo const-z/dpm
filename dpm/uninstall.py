@@ -36,7 +36,7 @@ def uninstall_package(package, dice = None, other_deps = None, **kwargs):
 
     install_info = get_package_yaml(package, 'install.yaml')
 
-    for v in install_info.get('pre_uninstall_cmd', ()):
+    for v in install_info.get('pre_uninstall', ()):
         if not run_process(command=v, cwd=install_path):
             raise UninstallError('Pre-uninstall command error.')
 

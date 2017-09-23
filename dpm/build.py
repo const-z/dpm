@@ -60,7 +60,7 @@ def build(args):
         info_files = list(args.spec)
 
         keywords = (
-            'files',
+            'targets',
             'extras',
             'ignore',
             'pre_build',
@@ -145,7 +145,7 @@ def build(args):
                 if fnmatch.fnmatch(path, patt):
                     return True
 
-        files = install_info.get('files', [])
+        files = install_info.get('targets', [])
         extras = install_info.pop('extras', [])
 
         log.debug('Writing %s', filename)

@@ -44,7 +44,7 @@ def uninstall_package(package, dice = None, other_deps = None, **kwargs):
         log.debug('deleting: %s', install_path) 
         shutil.rmtree(install_path)
     except Exception as e:
-        log.warn('Can\'t delete %s:\n%s', v, str(e))
+        log.warn('Can\'t delete %s:\n%s', install_path, str(e))
         log.warn('Not all resources was deleted, verify log above.')
 
     deps = install_info.get('dependencies')

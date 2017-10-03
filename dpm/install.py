@@ -133,7 +133,7 @@ def install_package(package, force = False,
         package_path = tempfile.mkdtemp('-dpm')
         temp.append(package_path)
 
-        files = install_info.get('targets', ())
+        files = install_info.get('targets', [])
         log.debug('Exctracting archive to: %s', package_path)
 
         for name in z.namelist():

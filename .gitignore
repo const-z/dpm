@@ -1,3 +1,5 @@
 __pycache__
 .directory
 dpm.egg*
+build/
+dist/

@@ -12,7 +12,7 @@ build dpm for dev:
         CI_BUILD_TAG: "latest-dev"
     script:
         - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-        - ./build_image "dev"
+        - ./build_image.sh "dev"
         - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_TAG
         - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
         - docker push dicehub/dpm:$CI_BUILD_TAG
@@ -31,7 +31,7 @@ build dpm for production:
             then
                 echo "Build release image for production";
                 docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY;
-                ./build_image "$CI_BUILD_TAG";
+                ./build_image.sh "$CI_BUILD_TAG";
                 docker push $CI_REGISTRY_IMAGE:latest;
                 docker push $CI_REGISTRY_IMAGE:$CI_BUILD_TAG;
                 docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD;

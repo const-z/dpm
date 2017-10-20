@@ -1,0 +1,46 @@
+before_script:
+  - echo "Building dpm"
+  - echp "============"
+
+stages:
+    - build
+
+build dpm for dev:
+    stage: build
+    environment: development
+    variables:
+        CI_BUILD_TAG: "latest-dev"
+    script:
+        - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+        - ./build_image "dev"
+        - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_TAG
+        - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+        - docker push dicehub/dpm:$CI_BUILD_TAG
+        - docker push dicehub/dpm:latest
+    only:
+        - dev
+    tags:
+        - image-builder
+
+build dpm for production:
+    stage: build
+    environment: production
+    script:
+        - git branch -a --contains $CI_BUILD_REF
+        - if grep -q "master" <<< $(git branch -a --contains $CI_BUILD_REF); 
+            then
+                echo "Build release image for production";
+                docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY;
+                ./build_image "$CI_BUILD_TAG";
+                docker push $CI_REGISTRY_IMAGE:latest;
+                docker push $CI_REGISTRY_IMAGE:$CI_BUILD_TAG;
+                docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD;
+                docker push dicehub/dpm:$CI_BUILD_TAG;
+                docker push dicehub/dpm:latest;
+            else
+                echo "Tag is not from master branch. Image will not be deployed for production";
+          fi
+    only:
+        - /^v?[0-9]+\.[0-9]+\.[0-9]+(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?(?:\+[0-9A-Za-z-.]+)?$/
+    tags:
+        - image-builder

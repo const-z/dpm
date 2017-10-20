@@ -16,7 +16,6 @@ build dpm for dev:
         - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_TAG
         - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
         - docker push dicehub/dpm:$CI_BUILD_TAG
-        - docker push dicehub/dpm:latest
     only:
         - dev
     tags:
@@ -32,11 +31,9 @@ build dpm for production:
                 echo "Build release image for production";
                 docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY;
                 ./build_image.sh "$CI_BUILD_TAG";
-                docker push $CI_REGISTRY_IMAGE:latest;
                 docker push $CI_REGISTRY_IMAGE:$CI_BUILD_TAG;
                 docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD;
                 docker push dicehub/dpm:$CI_BUILD_TAG;
-                docker push dicehub/dpm:latest;
             else
                 echo "Tag is not from master branch. Image will not be deployed for production";
           fi

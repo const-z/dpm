@@ -1,6 +1,6 @@
 before_script:
   - echo "Building dpm"
-  - echp "============"
+  - echo "============"
 
 stages:
     - build

@@ -9,7 +9,7 @@ build dpm for dev:
     stage: build
     environment: development
     variables:
-        CI_BUILD_TAG: "latest-dev"
+        CI_BUILD_TAG: "dev"
     script:
         - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
         - ./build_image.sh "dev"

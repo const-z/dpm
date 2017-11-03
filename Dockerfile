@@ -23,5 +23,6 @@ RUN adduser -D -u 1000 dpm &&\
 RUN apk add --no-cache bash=4.3.42-r5 &&\
     pip install https://github.com/dicehub/dpm/archive/$VERSION.zip
 
+WORKDIR /home/dpm
 USER dpm
 # CMD ["python3", "-m", "dpm"]

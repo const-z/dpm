@@ -7,3 +7,4 @@ dice pacakge manager
 * Uninstall packages for DICE.
 * Build packages fro distribution with all dependencies.
 * Show current version.
+
